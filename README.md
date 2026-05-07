@@ -75,6 +75,44 @@ t.test(engagement_rate ~ sentiment_label,
 ```
 
 **Results**
+
 With the p-value being greater than 0.05, we fail to reject the null hypothesis. There is an insignificant amount of evidence to show that engagement rates differ between positive and negative posts.
 
+
+**Linear Regression**
+
+A linear regression model was created to determine whether sentiment score could predict engagement rate on social media posts.
+
+**Model**
+```{r}
+engagement_lm <- lm(engagement_rate ~ sentiment_score,
+                    data = socialMedia)
+
+summary(engagement_lm)
+```
+
+
+**Results**
+The model shows that the sentiment score cannot predict engagement rate. The p-value also shows a weak connection, sentiment scores does not affect engagement rate.
+
+
 ### Data Visualizations
+
+*Average Engagement by Platform*
+This bar chart compares the average engagement rate across different social media platforms.
+
+<img width="823" height="450" alt="image" src="https://github.com/user-attachments/assets/cd145daf-d23e-4d3e-8727-b84413af7964" />
+
+
+**Sentiment Score vs Engagement Rate*
+This scatter plot visualizes the relationship between sentiment score and engagement rate.
+
+<img width="823" height="450" alt="image" src="https://github.com/user-attachments/assets/ffa12ab5-67f4-48bf-8a7a-8a621ba24ebb" />
+
+*Average Engagement Rate by Emotion Type*
+This bar chart compares the average engagement rate across different emotion types within the dataset.
+
+<img width="823" height="450" alt="image" src="https://github.com/user-attachments/assets/57c4a0a6-2cf7-4763-be81-8baa0a6c736d" />
+
+
+### Conclusion
