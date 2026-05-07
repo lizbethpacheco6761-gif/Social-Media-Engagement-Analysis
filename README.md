@@ -52,22 +52,28 @@ summarise(emotionEngagement,
 ```
 
 ### Statistical Analysis
+
 **Descriptive Statistics**
+
 Several descriptive statistics were calculated to better understand the engagement patterns within the dataset.
   - The mean engagement rate was about **27%** across all social media posts.
   - The median shows that the middle number of likes received across all social media posts in the dataset is **2,496**.
   - The minimum likes count was **0** and maximum was **5,000**. This shows a large range between post performances.
 
 **Hypothesis Testing**
+
 A two-sample t-test was done to determine if positive sentiment posts receive higher engagement rates compared to negative sentiment posts.
+
 **Hypotheses**
   - Null Hypothesis (H0): There is no difference in engagement rates between positive and negative posts.
   - Alternative Hypothesis (H1): There is a difference in engagement rates between positive and negative posts.
+
 **t-Test**
 ```{r}
 t.test(engagement_rate ~ sentiment_label,
        data = sentimentTest)
 ```
+
 **Results**
 With the p-value being greater than 0.05, we fail to reject the null hypothesis. There is an insignificant amount of evidence to show that engagement rates differ between positive and negative posts.
 
