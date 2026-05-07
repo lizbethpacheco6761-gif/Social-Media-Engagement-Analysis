@@ -61,7 +61,7 @@ Several descriptive statistics were calculated to better understand the engageme
 **Hypothesis Testing**
 A two-sample t-test was done to determine if positive sentiment posts receive higher engagement rates compared to negative sentiment posts.
 **Hypotheses**
-  - Null Hypothesis (H~0~): There is no difference in engagement rates between positive and negative posts.
-  - Alternative Hypothesis (H~1~): There is a difference in engagement rates between positive and negative posts.
+  - Null Hypothesis (H_0): There is no difference in engagement rates between positive and negative posts.
+  - Alternative Hypothesis (H_1): There is a difference in engagement rates between positive and negative posts.
   - 
 ### Data Visualizations
