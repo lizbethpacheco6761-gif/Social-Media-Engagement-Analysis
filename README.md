@@ -17,9 +17,16 @@ After looking over the data, three main focuses were determined.
   - Which emotion type sees the lowest engagement?
 
 ### Data Cleaning
+Prior to the analysis beginning, the dataset was checked for missing and duplicated values. All but one variable saw 0 missing values. *Mentions* has 3,941 missing values, but since it won't affect the analysis, there will be no change. There was 0 duplicates in the data.
 
 ### Data Manipulation
-
+Data was manipulated using dplyr functions.
+**1.** Found the average engagement rate by platform
+```{r}
+platformEngagement <- group_by(socialMedia, platform)
+summarise(platformEngagement,
+          avgEngagement = mean(engagement_rate, na.rm = TRUE) * 100)
+```
 ### Statistical Analysis
 
 ### Data Visualizations
