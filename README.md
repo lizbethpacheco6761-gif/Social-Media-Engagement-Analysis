@@ -21,12 +21,40 @@ Prior to the analysis beginning, the dataset was checked for missing and duplica
 
 ### Data Manipulation
 Data was manipulated using dplyr functions.
+
 **1.** Found the average engagement rate by platform
 ```{r}
 platformEngagement <- group_by(socialMedia, platform)
 summarise(platformEngagement,
           avgEngagement = mean(engagement_rate, na.rm = TRUE) * 100)
 ```
+Facebook seems to have the highest engagement rates out of all the platforms.
+
+
+**2.** Found how many posts had an engagement rate greater than 0.75 and had a positive sentiment label.
+```{r}
+highPositive <- filter(socialMedia,
+       sentiment_label == "Positive" &
+         engagement_rate >= 0.75)
+```
+```{r}
+head(highPositive)
+```
+```{r}
+nrow(highPositive)
+```
+There are 244 posts that meet both of those filters.
+
+
+**3.** Found the emotion type with the lowest engagement rate.
+```{r}
+emotionEngagement <- group_by(socialMedia, emotion_type)
+summarise(emotionEngagement,
+          avgEngagement = mean(engagement_rate, na.rm = TRUE) * 100) %>%
+  arrange(avgEngagement)
+```
+
+
 ### Statistical Analysis
 
 ### Data Visualizations
