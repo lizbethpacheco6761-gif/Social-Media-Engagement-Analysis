@@ -93,6 +93,7 @@ summary(engagement_lm)
 
 
 **Results**
+
 The model shows that the sentiment score cannot predict engagement rate. The p-value also shows a weak connection, sentiment scores does not affect engagement rate.
 
 
