@@ -99,20 +99,24 @@ The model shows that the sentiment score cannot predict engagement rate. The p-v
 ### Data Visualizations
 
 *Average Engagement by Platform*
+
 This bar chart compares the average engagement rate across different social media platforms.
 
 <img width="823" height="450" alt="image" src="https://github.com/user-attachments/assets/cd145daf-d23e-4d3e-8727-b84413af7964" />
 
 
-**Sentiment Score vs Engagement Rate*
+*Sentiment Score vs Engagement Rate*
+
 This scatter plot visualizes the relationship between sentiment score and engagement rate.
 
 <img width="823" height="450" alt="image" src="https://github.com/user-attachments/assets/ffa12ab5-67f4-48bf-8a7a-8a621ba24ebb" />
 
 *Average Engagement Rate by Emotion Type*
+
 This bar chart compares the average engagement rate across different emotion types within the dataset.
 
 <img width="823" height="450" alt="image" src="https://github.com/user-attachments/assets/57c4a0a6-2cf7-4763-be81-8baa0a6c736d" />
 
 
 ### Conclusion
+This project helped me explore how platform type, emotion type, and sentiment score relate to social media engagement rates. After cleaning and analyzing the data in R, I found that engagement levels varied across posts, but sentiment score was not a strong predictor of engagement.
