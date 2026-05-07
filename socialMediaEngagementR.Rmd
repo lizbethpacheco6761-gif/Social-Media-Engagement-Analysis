@@ -1,0 +1,209 @@
+---
+title: "Social Media Engagement Analysis"
+author: "Lizbeth Pacheco"
+date: "2026-05-04"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+```
+
+
+# Ingest the Dataset
+```{r}
+socialMedia <- read_excel("socialMediaEngagement.xlsx")
+head(socialMedia)
+```
+
+
+### After looking over the dataset, the main focuses on this analysis are the following:
+**Which social media platform has the highest engagement?**
+**Does a higher sentiment score lead to higher engagement?**
+**Which emotion type sees the lowest engagement?**
+
+
+
+
+# Data Cleaning
+
+**Checking the dataset structure**
+
+```{r}
+str(socialMedia)
+```
+
+**Checking for missing values**
+
+```{r}
+colSums(is.na(socialMedia))
+```
+
+```{r}
+sum(duplicated(socialMedia))
+```
+
+**Prior to the analysis beginning, the dataset was checked for missing and duplicated values. All but one variable saw 0 missing values. *Mentions* has 3,941 missing values, but since it won't affect the analysis, there will be no change. There was 0 duplicates in the data.**
+
+
+
+
+# Data Manipulation
+
+**Average Engagement by Platform**
+```{r}
+platformEngagement <- group_by(socialMedia, platform)
+summarise(platformEngagement,
+          avgEngagement = mean(engagement_rate, na.rm = TRUE) * 100)
+```
+**Facebook seems to have the highest engagement rates out of all the platforms.**
+
+
+**Positive Sentiment Posts with High Engagement Rates**
+```{r}
+highPositive <- filter(socialMedia,
+       sentiment_label == "Positive" &
+         engagement_rate >= 0.75)
+```
+```{r}
+head(highPositive)
+```
+```{r}
+nrow(highPositive)
+```
+**There are 244 posts that meet both of those filters.**
+
+
+**Emotion Type with Lowest Engagement**
+
+```{r}
+emotionEngagement <- group_by(socialMedia, emotion_type)
+summarise(emotionEngagement,
+          avgEngagement = mean(engagement_rate, na.rm = TRUE) * 100) %>%
+  arrange(avgEngagement)
+```
+**Posts that are associated with happy emotions seem to receive the lowest engagement.**
+
+
+
+
+# Statistical Analysis
+
+### **Descriptive Statistics**
+
+**Mean**
+```{r}
+mean(socialMedia$engagement_rate) * 100
+```
+The mean shows the average level of engagement across all social media posts in this dataset is about 27%.
+
+**Median**
+```{r}
+median(socialMedia$likes_count)
+```
+The median shows that the middle number of likes received across all social media posts in the dataset is 2,496.
+
+**Minimum and Maximum**
+```{r}
+min(socialMedia$likes_count)
+```
+```{r}
+max(socialMedia$likes_count)
+```
+These two show us the minimum and maximum likes received on posts within the dataset.
+
+
+### **Hypothesis Testing**
+Do positive sentiment posts receive higher engagement than negative sentiment posts?
+
+```{r}
+# Excluding 'Neutral' Posts
+sentimentTest <- filter(socialMedia,
+                   sentiment_label != "Neutral")
+```
+
+**Hypotheses**
+Null Hypothesis (H~0~): There is no difference in engagement rates between positive and negative posts.
+Alternative Hypothesis (H~1~): There is a difference in engagement rates between positive and negative posts.
+
+### **t-Test**
+```{r}
+t.test(engagement_rate ~ sentiment_label,
+       data = sentimentTest)
+```
+With the p-value being greater than 0.05, we fail to reject the null hypothesis. There is an insignificant amount of evidence to show that engagement rates differ between positive and negative posts.
+
+### **Linear Regression**
+Does sentiment score predict engagement rate?
+
+```{r}
+engagement_lm <- lm(engagement_rate ~ sentiment_score,
+                    data = socialMedia)
+
+summary(engagement_lm)
+```
+The model shows that the sentiment score cannot predict engagement rate. The p-value also shows a weak connection, sentiment scores does not affect engagement rate.
+
+
+
+
+# Data Visualizations
+**Platform Engagement**
+
+```{r}
+# Average engagement by platform
+platformEngagement <- socialMedia %>%
+  group_by(platform) %>%
+  summarise(avgEngagement = mean(engagement_rate, na.rm = TRUE))
+```
+
+```{r}
+ggplot(platformEngagement, aes(x = platform, y = avgEngagement)) +
+  geom_col(fill = "palevioletred3") +
+  labs(
+    title = "Average Engagement Rate by Platform",
+    x = "Platform",
+    y = "Average Engagement Rate"
+  ) +
+  theme_minimal()
+```
+
+**Sentiment Score vs Engagement Rate**
+
+```{r}
+ggplot(socialMedia, aes(x = sentiment_score, y = engagement_rate)) +
+  geom_point(color = "palevioletred", alpha = 0.5) +
+  geom_smooth(method = "lm", color = "violetred3") +
+  labs(
+    title = "Relationship Between Sentiment Score and Engagement Rate",
+    x = "Sentiment Score",
+    y = "Engagement Rate"
+  ) +
+  theme_minimal()
+```
+
+**Engagement Rate by Emotion Types**
+
+```{r}
+# Average engagement rate by emotion type
+emotionEngagement <- socialMedia %>%
+  group_by(emotion_type) %>%
+  summarise(avgEngagement = mean(engagement_rate, na.rm = TRUE))
+```
+
+
+```{r}
+ggplot(emotionEngagement, aes(x = emotion_type, y = avgEngagement)) +
+  geom_col(fill = "palevioletred3") +
+  labs(
+    title = "Average Engagement Rate by Emotion Type",
+    x = "Emotion Type",
+    y = "Average Engagement Rate"
+  ) +
+  theme_minimal()
+```
+
