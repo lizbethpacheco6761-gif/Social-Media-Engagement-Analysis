@@ -38,9 +38,6 @@ highPositive <- filter(socialMedia,
          engagement_rate >= 0.75)
 ```
 ```{r}
-head(highPositive)
-```
-```{r}
 nrow(highPositive)
 ```
 There are 244 posts that meet both of those filters.
